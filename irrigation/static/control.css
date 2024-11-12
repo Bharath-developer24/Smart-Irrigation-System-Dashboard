@@ -1,0 +1,22 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+h1 {
+    color: #006400;
+}
+.container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.sensor-data p {
+    font-size: 1.2em;
+}
+.message {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #006400;
+}

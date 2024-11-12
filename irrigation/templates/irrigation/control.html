@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Irrigation Control</title>
+
+    <style>
+        /* Basic CSS for layout and styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #006400;
+        }
+        nav {
+            margin-bottom: 20px;
+            background-color: #006400;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .sensor-data, .irrigation-details {
+            padding: 15px 0;
+        }
+        .sensor-data p, .irrigation-details p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .message {
+            color: #006400;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        .input-group label {
+            display: inline-block;
+            width: 150px;
+        }
+        .input-group input {
+            width: 200px;
+            padding: 5px;
+        }
+        .input-group button {
+            padding: 5px 10px;
+            background-color: #006400;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .input-group button:hover {
+            background-color: #004d00;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/dashboard/">Control</a>
+        <a href="/dashboard/">History</a>
+    </nav>
+
+    <div class="container">
+        <h1>Smart Irrigation System</h1>
+        
+        <div class="sensor-data">
+            <div class="input-group">
+                <label for="input-moisture">Enter Soil Moisture (%):</label>
+                <input type="number" id="input-moisture" placeholder="Enter moisture">
+                <button onclick="updateMoisture()">Update</button>
+            </div>
+            <p>Soil Moisture: <span id="moisture">Loading...</span>%</p>
+            
+            <div class="input-group">
+                <label for="input-temperature">Enter Temperature (°C):</label>
+                <input type="number" id="input-temperature" placeholder="Enter temperature">
+                <button onclick="updateTemperature()">Update</button>
+            </div>
+            <p>Temperature: <span id="temperature">Loading...</span>°C</p>
+        </div>
+
+        <div class="message">{{ message }}</div>
+
+        <div class="irrigation-details">
+            {% if irrigation %}
+                <h2>Irrigation Details</h2>
+                <p>Start Time: {{ irrigation.start_time }}</p>
+                <p>End Time: {{ irrigation.end_time }}</p>
+                <p>Water Amount: {{ irrigation.water_amount }}L</p>
+            {% else %}
+                <p>No irrigation scheduled.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // Function to update soil moisture color based on its value
+        function updateMoistureDisplay() {
+            const moistureElement = document.getElementById('moisture');
+            const moistureValue = parseFloat(moistureElement.innerText);
+
+            if (moistureValue < 30) {
+                moistureElement.style.color = 'red';
+            } else if (moistureValue >= 30 && moistureValue <= 60) {
+                moistureElement.style.color = 'orange';
+            } else {
+                moistureElement.style.color = 'green';
+            }
+        }
+
+        // Function to show an alert when soil moisture is too low
+        function checkIrrigationNeed() {
+            const moistureElement = document.getElementById('moisture');
+            const moistureValue = parseFloat(moistureElement.innerText);
+
+            if (moistureValue < 30) {
+                alert('Soil moisture is low! Irrigation is needed.');
+            }
+        }
+
+        // Function to update the moisture value based on user input
+        function updateMoisture() {
+            const moistureInput = document.getElementById('input-moisture').value;
+            const moistureElement = document.getElementById('moisture');
+            moistureElement.textContent = moistureInput;
+            updateMoistureDisplay();
+            checkIrrigationNeed();
+        }
+
+        // Function to update the temperature value based on user input
+        function updateTemperature() {
+            const temperatureInput = document.getElementById('input-temperature').value;
+            const temperatureElement = document.getElementById('temperature');
+            temperatureElement.textContent = temperatureInput;
+        }
+
+        // Run the functions when the page loads
+        window.onload = function() {
+            document.getElementById('moisture').textContent = '45'; // Initial moisture value
+            document.getElementById('temperature').textContent = '25'; // Initial temperature value
+            updateMoistureDisplay();
+        }
+    </script>
+
+</body>
+</html>

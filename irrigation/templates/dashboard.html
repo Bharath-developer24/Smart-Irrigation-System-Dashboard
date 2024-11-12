@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Irrigation Dashboard</title>
+    <style>
+        /* Internal CSS for layout and styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://media.istockphoto.com/id/2164485371/photo/agricultural-sprinklers-watering-spring-onion-or-leek-plantation-in-spring.jpg?s=1024x1024&w=is&k=20&c=UTK06QQa-oBNnOj9DgfY2Ota_DpwUt-WFY2y8V1yNQw=') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        header {
+            background-color: rgba(0, 128, 0, 0.8);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        header nav {
+            margin-top: 10px;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem;
+        }
+
+        .sidebar {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+        }
+
+        .right-image {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 8px;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: #FFD700;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Smart Irrigation</h1>
+        <nav>
+            <a href="{% url 'irrigation_control' %}">Control</a>
+            <a href="{% url 'irrigation_history' %}">History</a>
+            <a href="https://www.bing.com/ck/a?!&&p=a78861d05841ee30JmltdHM9MTcyNTU4MDgwMCZpZ3VpZD0yNjhhZDUxZS04ZDFmLTZhYzYtMmMzMy1jMWI1OGNiOTZiNmYmaW5zaWQ9NTIyNg&ptn=3&ver=2&hsh=3&fclid=268ad51e-8d1f-6ac6-2c33-c1b58cb96b6f&psq=agriculture+pesticides+shop+near+me&u=a1aHR0cHM6Ly93d3cuYWdyaXBsZXhpbmRpYS5jb20v&ntb=1">Tips</a>
+            <a href="https://www.youtube.com/playlist?list=PLOjf_dW_fXnADzITdELD95Tb4wQp3L9iK">Videos</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <aside class="sidebar">
+                <div class="sensor-data">
+                    <h2>Current Sensor Readings</h2>
+                    <p>Soil Moisture: <span id="soil-moisture">Loading...</span></p>
+                    <p>Temperature: <span id="temperature">Loading...</span></p>
+                </div>
+
+                <div class="recent-events">
+                    <h2>Recent Irrigation Events</h2>
+                    <div id="events">
+                        <p>No recent events.</p>
+                    </div>
+                </div>
+
+                <div class="pest-management">
+                    <h2>Pest Management</h2>
+                    <p>Effective pest management practices and tips.</p>
+                </div>
+            </aside>
+
+            <div class="content">
+                <img src="https://images.unsplash.com/photo-1609252509027-3928a66302fd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Farmers Working" class="right-image">
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Smart Irrigation System. "Farming is not a job, it's a way of life." - Indian Farmers</p>
+        <a href="https://www.agri-loans.gov.in" target="_blank">Agricultural Loans from Indian Government</a>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate loading sensor data
+            setTimeout(function() {
+                document.getElementById('soil-moisture').textContent = '45%'; // Replace with actual data
+                document.getElementById('temperature').textContent = '25°C'; // Replace with actual data
+            }, 1000);
+
+            // Simulate loading recent events
+            setTimeout(function() {
+                const eventsContainer = document.getElementById('events');
+                // Example event data
+                const events = [
+                    { date: '2024-09-05', description: 'Irrigation started at 08:00 AM.' },
+                    { date: '2024-09-04', description: 'Irrigation ended at 06:00 PM.' }
+                ];
+
+                if (events.length > 0) {
+                    eventsContainer.innerHTML = events.map(event => 
+                        `<p>${event.date}: ${event.description}</p>`
+                    ).join('');
+                } else {
+                    eventsContainer.innerHTML = '<p>No recent events.</p>';
+                }
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
